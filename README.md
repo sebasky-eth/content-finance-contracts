@@ -12,7 +12,7 @@ For collections that are connected with core {IERC721CoreBinder}, CREATE3 can be
 
 ## Roadmap
 
-1. Create explanation how to create collections by using already deployed helpers.
+1. Create explanation how to create collections by using already deployed helpers. ✅
 2. Improve comments, create visual explanations of IBindableToken protocol.
 3. Implementation of RetroactiveApprovals, Commercialy correct renting system, token customization system.
 4. BitfieldERC721 - implementation of gas efficient collections with supply limit.
@@ -84,13 +84,14 @@ Compare bycode from 2. with bycode from initial transaction. Additional characte
 ##### 4.B Download project and deploy from IDE
 
 Project is wrote for foundry (developing/testing). But fore deploying I recommend Remix-IDE (more comfortable security - metamask/rabby/etc). Change imports if necessary.
-from:
+
+From:
 
 ``` solidity
 import {CREATE3} from "solady/utils/CREATE3.sol";
 ```
 
-to:
+To:
 
 ``` solidity
 import {CREATE3} from "solady/src/utils/CREATE3.sol";
