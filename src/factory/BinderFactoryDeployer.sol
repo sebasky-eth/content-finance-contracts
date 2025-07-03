@@ -9,7 +9,7 @@ import {IncrementalOwnableFactory} from "./IncrementalOwnableFactory.sol";
 /**
  * @title Factory of IncrementalOwnableFactory (or custom code) with deterministic address.
  * @author Sebasky (https://github.com/sebasky-eth)
- * @notice
+ * @notice Using this collection for factory deployment gives extra predictability in mapping (IBindableToken): (deployer, core collection name) -> collection address.
  */
 contract BinderFactoryDeployer {
     bytes32 private constant _incrementalOwnableFactoryCodeHash =

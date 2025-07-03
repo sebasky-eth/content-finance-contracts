@@ -34,3 +34,56 @@ $ forge build
 ```shell
 $ forge test
 ```
+
+### Deploying Cross-collectionall smaller collection
+
+#### Infrastructure:
+
+A. Factory that deploys all collections.
+B. Core collection that store all tokens (could be deployed later).
+N. Many smaller collections.
+
+"tokenId" in core collection is created from "[tokenIdInGroup][groupId]".
+
+#### Why you could deploy smaller collection before core was created?
+
+ERC721PairedBinderPrelaunched act independently. When core will be released, it will unlock binding mechanism and call it whatever transfer is made, so it can mirror transfer (by casting event). But for now it is normally functional collection.
+
+So you can release very small collection now and expand it with core when next item arrives for group (album for discography, novel for series, etc.).
+
+#### Deploying
+
+1. BinderFactoryDeployer
+Call [deployIncrementalOwnableFactory (0x276c5101)](https://basescan.org/address/0x59b9f15621fa999fcb305dc7ee65f99d2ee428ac#writeContract#F2) with name of core collection and address of initial owner.
+
+Name is not that important (but it gives you more predictability for future multi-collectional releases, if you want to use this contract again).
+
+Result: creating new smart contract: IncrementalOwnableFactory.
+
+2. CrossCollectionPrerelease
+
+Call [firstCrossCollectionalSingleInitCode](https://basescan.org/address/0x1d4b37e44131b6b95181b21c7700a307d5a8d393#readContract#F1)
+It has many arguments and creates init code for small collection. Save result for step 3 and 4.
+
+There is non-standard argument: "groupIdBitWidth". What it does?
+Core collection will have "tokenId" bit size: "[tokenIdBitWidth][groupIdBitWidth]".
+GroupIdBitWidth reduce maximum amount of groups. I set it to 9, so there could be 510 groups in my core collection (2^9 - 2).
+Reduction is good for gas, because more information can be stored together with "tokenId".
+If you want more groups, just use 16 bits (65534 max). Or even 128 (practically unlimited).
+
+3. IncrementalOwnableFactory
+Call [deploy (0x00774360)](https://basescan.org/address/0x8631292208dc3c1a3e3935b312e602a42bc662e0#writeContract#F1)
+Pass init code from 2.
+
+4.1 Verify your contract to be able to mint tokens from etherscan. Compare bycode from 2. with bycode from initial transaction. Additional characters will be used as encoded constructor arguments.
+
+4.2 Download project and deploy from foundry.  Or open it in Remix-IDE (more comfortable security - metamask/rabby/etc) and change imports if necessary:
+from:
+
+``` solidity
+import {CREATE3} from "solady/utils/CREATE3.sol";
+```
+
+``` solidity
+import {CREATE3} from "solady/src/utils/CREATE3.sol";
+```

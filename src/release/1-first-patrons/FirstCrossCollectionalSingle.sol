@@ -17,10 +17,9 @@ import {ERC721DynamicallyMintable} from "../../token/erc721/open-zeppelin-extens
 import {GroupedTokenMapper} from "../../token/utils/GroupedTokenMapper.sol";
 
 /**
- * @title Contract used for 'FirstPatrons. Small collection (like album) that shares tokens with "main collection" (like Music Patrons).
- * @dev Bindable collection with small initial release ('firstTokensURI') and token-independent static uri.
- * Require deployment of {BinderFactory} beforehand for deterministic
- * @author
+ * @title Contract used for 'FirstPatrons'. Small collection (like Album Patrons) that shares tokens with main collection (like Artist's Music Patrons).
+ * Should be deployed by {BinderFactory} to be predictable.
+ * @author Sebasky (https://github.com/sebasky-eth)
  */
 contract FirstCrossCollectionalSingle is
     ERC721,

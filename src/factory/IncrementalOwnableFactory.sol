@@ -10,6 +10,8 @@ import {IIncrementalOwnableFactory} from "./IIncrementalOwnableFactory.sol";
 /**
  * @title Ownable factory of custom contracts that are deployed with incrementally increased salt.
  * @author Sebasky (https://github.com/sebasky-eth)
+ * @notice Used for IBindableToken.
+ * Core collection MUST emit event that points to factory address and be deployed with salt=0 {IIncrementalOwnableFactory.deployBase}.
  */
 contract IncrementalOwnableFactory is Ownable, IIncrementalOwnableFactory {
     uint256 private _previousIteration;
