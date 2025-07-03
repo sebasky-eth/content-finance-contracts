@@ -53,14 +53,15 @@ So you can release very small collection now and expand it with core when next i
 
 #### Deploying
 
-1. BinderFactoryDeployer
+##### 1. BinderFactoryDeployer
+
 Call [deployIncrementalOwnableFactory (0x276c5101)](https://basescan.org/address/0x59b9f15621fa999fcb305dc7ee65f99d2ee428ac#writeContract#F2) with name of core collection and address of initial owner.
 
 Name is not that important (but it gives you more predictability for future multi-collectional releases, if you want to use this contract again).
 
 Result: creating new smart contract: IncrementalOwnableFactory.
 
-2. CrossCollectionPrerelease
+##### 2. CrossCollectionPrerelease
 
 Call [firstCrossCollectionalSingleInitCode](https://basescan.org/address/0x1d4b37e44131b6b95181b21c7700a307d5a8d393#readContract#F1)
 It has many arguments and creates init code for small collection. Save result for step 3 and 4.
@@ -71,18 +72,25 @@ GroupIdBitWidth reduce maximum amount of groups. I set it to 9, so there could b
 Reduction is good for gas, because more information can be stored together with "tokenId".
 If you want more groups, just use 16 bits (65534 max). Or even 128 (practically unlimited).
 
-3. IncrementalOwnableFactory
+##### 3. IncrementalOwnableFactory
+
 Call [deploy (0x00774360)](https://basescan.org/address/0x8631292208dc3c1a3e3935b312e602a42bc662e0#writeContract#F1)
 Pass init code from 2.
 
-4.1 Verify your contract to be able to mint tokens from etherscan. Compare bycode from 2. with bycode from initial transaction. Additional characters will be used as encoded constructor arguments.
+##### 4.A Verify your contract to be able to mint tokens from etherscan
 
-4.2 Download project and deploy from foundry.  Or open it in Remix-IDE (more comfortable security - metamask/rabby/etc) and change imports if necessary:
+Compare bycode from 2. with bycode from initial transaction. Additional characters will be used as encoded constructor arguments.
+
+##### 4.B Download project and deploy from IDE
+
+Project is wrote for foundry (developing/testing). But fore deploying I recommend Remix-IDE (more comfortable security - metamask/rabby/etc). Change imports if necessary.
 from:
 
 ``` solidity
 import {CREATE3} from "solady/utils/CREATE3.sol";
 ```
+
+to:
 
 ``` solidity
 import {CREATE3} from "solady/src/utils/CREATE3.sol";
