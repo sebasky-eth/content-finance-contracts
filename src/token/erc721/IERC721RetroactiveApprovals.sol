@@ -8,7 +8,7 @@ import {IERC721} from "@openzeppelin/contracts/interfaces/IERC721.sol";
  * @author Sebasky (https://github.com/sebasky-eth)
  */
 interface IERC721RetroactiveApprovals is IERC721 {
-    event RetroactiveApproval(address indexed owner, uint256 indexed retroactiveDate);
+    event RetroactiveApproval(address indexed owner, uint256 retroactiveDate);
 
     /**
      * @notice Disable all approvals for caller without deleting them.
@@ -29,17 +29,17 @@ interface IERC721RetroactiveApprovals is IERC721 {
      * @notice Returns date when operator approval was changed by 'owner'.
      * @return date - time when latest approval was made. '0' could mean that approval was never changed.
      */
-    function approvalChangeDate(address owner, address operator) external view returns (uint256 date);
+    function approvalDate(address owner, address operator) external view returns (uint256 date);
 
     /**
      * @notice Returns date when token approval was lastly changed.
      * @return date - time when latest approval was made. '0' mean that approval was never changed in current ownership.
      */
-    function tokenApprovalChangeDate(uint256 tokenId) external view returns (uint256 date);
+    function tokenApprovalDate(uint256 tokenId) external view returns (uint256 date);
 
     /**
      * @notice Returns a date, which turns off all approvals for 'owner' granted before it.
      * @return date - time when latest approval was made. '0' mean that approval was never changed.
      */
-    function approvalsRetroactiveDate(address owner) external view returns (uint256);
+    function retroactiveDate(address owner) external view returns (uint256);
 }
